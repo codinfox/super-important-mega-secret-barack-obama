@@ -9,12 +9,13 @@ import edu.stanford.nlp.util.CoreMap;
 
 public class Main {
 
+	private Properties props;
+	private StanfordCoreNLP pipeline;
 
 	public void start() {
-		String text = "I am feeling very upset";
-		Properties props = new Properties();
+		props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse, sentiment");
-		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+		pipeline = new StanfordCoreNLP(props);
 		
 		String[] texts = {
 				"I am feeling very upset",
@@ -28,16 +29,46 @@ public class Main {
 				"Haha I feel like shit",
 				"Okay so ashton can't cook. Still perfect."
 		};
+		int[] scores = new int[texts.length];
 		
-		for(String t : texts) {
-			Annotation annotation = pipeline.process(t);
+		
+		
+		calculateScores(scores, texts);		
+		printResults(scores, texts);
+			
+		
+	}
+	
+	public void calculateScores(int[] scores, String[] texts) {
+		for(int i = 0; i < texts.length; i++) {
+			Annotation annotation = pipeline.process(texts[i]);
 			List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
 			for (CoreMap sentence : sentences) {
 				String sentiment = sentence.get(SentimentCoreAnnotations.ClassName.class);
-				System.out.println(sentiment + ":\t" + sentence);
-			}
+				//System.out.println(sentiment + ":\t" + sentence);
+				/*
+				 * Can't just print the sentiment + sentence, since tweets are often longer than
+				 * one sentence. So I calculate the scores of each sentence and the sum of 
+				 * the sentence scores equals the tweet score.
+				 */
+				if(sentiment.equals("Positive")) {
+					scores[i]++;
+				} else if(sentiment.equals("Negative")) {
+					scores[i]--;
+				}				
+			}			
 		}
-		
+	}
+	
+	public void printResults(int[] scores, String[] texts) {
+		for(int i = 0; i < texts.length; i++) {
+			if(scores[i] > 0)
+				System.out.println("Positive: " + texts[i]);
+			else if(scores[i] < 0)
+				System.out.println("Negative: " + texts[i]);
+			else 
+				System.out.println("Neutral: " + texts[i]);
+		}
 	}
 
 	public static void main(String[] args) {
