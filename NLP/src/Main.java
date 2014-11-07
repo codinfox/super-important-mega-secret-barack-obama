@@ -1,6 +1,12 @@
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -11,11 +17,24 @@ public class Main {
 
 	private Properties props;
 	private StanfordCoreNLP pipeline;
-
-	public void start() {
+	private Twitter t;
+	private int positiveTweets, neutralTweets, negativeTweets;
+	
+	public void start() throws TwitterException {
 		props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse, sentiment");
 		pipeline = new StanfordCoreNLP(props);
+		t = (new TwitterFactory()).getInstance();
+		t.getOAuth2Token();
+		
+		LinkedList<String> textss = new LinkedList<String>();
+		Paging paging = new Paging(1, 100);
+		List<Status> statuses = t.getUserTimeline("adabroskii28",paging);
+		for(Status s : statuses) {
+			System.out.println(s.getText());
+			textss.add(s.getText());
+		}
+
 		
 		String[] texts = {
 				"I am feeling very upset",
@@ -29,19 +48,18 @@ public class Main {
 				"Haha I feel like shit",
 				"Okay so ashton can't cook. Still perfect."
 		};
-		int[] scores = new int[texts.length];
+		int[] scores = new int[textss.size()];
 		
 		
 		
-		calculateScores(scores, texts);		
-		printResults(scores, texts);
-			
+		calculateScores(scores, textss);		
+		printResults(scores, textss);
 		
 	}
 	
-	public void calculateScores(int[] scores, String[] texts) {
-		for(int i = 0; i < texts.length; i++) {
-			Annotation annotation = pipeline.process(texts[i]);
+	public void calculateScores(int[] scores, LinkedList<String> texts) {
+		for(int i = 0; i < texts.size(); i++) {
+			Annotation annotation = pipeline.process(texts.get(i));
 			List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
 			for (CoreMap sentence : sentences) {
 				String sentiment = sentence.get(SentimentCoreAnnotations.ClassName.class);
@@ -60,18 +78,27 @@ public class Main {
 		}
 	}
 	
-	public void printResults(int[] scores, String[] texts) {
-		for(int i = 0; i < texts.length; i++) {
-			if(scores[i] > 0)
-				System.out.println("Positive: " + texts[i]);
-			else if(scores[i] < 0)
-				System.out.println("Negative: " + texts[i]);
-			else 
-				System.out.println("Neutral: " + texts[i]);
+	public void printResults(int[] scores, LinkedList<String> texts) {
+		for(int i = 0; i < texts.size(); i++) {
+			if(scores[i] > 0) {
+				System.out.println("Positive: " + texts.get(i));
+				positiveTweets++;
+			} else if(scores[i] < 0) {
+				System.out.println("Negative: " + texts.get(i));
+				negativeTweets++;
+			} else { 
+				System.out.println("Neutral: " + texts.get(i));
+				neutralTweets++;
+			}
+			
 		}
+
+		System.out.println("Positive tweets: " + positiveTweets);
+		System.out.println("Negative tweets: " + negativeTweets);
+		System.out.println("Neutral tweets: " + neutralTweets);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws TwitterException {
 		new Main().start();
 	}
 
