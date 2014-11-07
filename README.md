@@ -1,7 +1,7 @@
 super-important-mega-secret-barack-obama
 ========================================
 
-Neutral:	I am feeling very upset\\
+Neutral:	I am feeling very upset <br/>
 Negative:	If you speed up when I turn on my blinker to get over, then there's a 100% chance you're an asshole
 Positive:	I want Ben & Jerry's like now.
 Neutral:	I learned a little about myself on the way home from Michigan.
