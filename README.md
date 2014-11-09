@@ -1,5 +1,7 @@
 super-important-mega-secret-barack-obama
 ========================================
+http://nlp.stanford.edu/sentiment/
+
 
 Neutral: I am feeling very upset <br/>
 Negative: If you speed up when I turn on my blinker to get over, then there's a 100% chance you're an asshole <br/>
