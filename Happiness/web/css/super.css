@@ -1,0 +1,42 @@
+#container{
+	
+position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F5F5F5;
+  -moz-border-radius: 15px;
+border-radius: 15px;
+
+padding: 10px;
+
+}
+
+.col-lg-10{
+	padding-left: 50px;
+}
+
+.col-lg-offset-2{
+
+	margin-top: -53px;
+	margin-left: 500px;
+}
+
+h1{
+	margin-top: 50px;
+	font-size: 60px;
+}
+
+body{
+
+	background-image: url("../imgs/back.png");
+
+}
+
+.center{
+	position: fixed;
+  top: 110%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
