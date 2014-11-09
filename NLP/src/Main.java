@@ -1,12 +1,16 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import javax.swing.JOptionPane;
 
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -19,8 +23,12 @@ public class Main {
 	private StanfordCoreNLP pipeline;
 	private Twitter t;
 	private int positiveTweets, neutralTweets, negativeTweets;
+	private List<Status> statuses;
+	private HashMap<String, Integer> dailyScore = new HashMap<String, Integer>();
+	
 	
 	public void start() throws TwitterException {
+		System.out.println(dailyScore.get("AA"));
 		props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, parse, sentiment");
 		pipeline = new StanfordCoreNLP(props);
@@ -28,36 +36,28 @@ public class Main {
 		t.getOAuth2Token();
 		
 		LinkedList<String> textss = new LinkedList<String>();
-		Paging paging = new Paging(1, 100);
-		List<Status> statuses = t.getUserTimeline("adabroskii28",paging);
+		Paging paging = new Paging(1, 1000);
+		//String a = JOptionPane.showInputDialog("Input twitter name");
+		statuses = t.getUserTimeline("adabroskii28", paging);
+		User user = statuses.get(0).getUser();
+		String URL = user.getBiggerProfileImageURL();
 		for(Status s : statuses) {
 			System.out.println(s.getText());
 			textss.add(s.getText());
 		}
 
-		
-		String[] texts = {
-				"I am feeling very upset",
-				"If you speed up when I turn on my blinker to get over, then there's a 100% chance you're an asshole",
-				"I want Ben & Jerry's like now.",
-				"I learned a little about myself on the way home from Michigan. What I learned is...  I LOVE FERGIE",
-				"I went from 'don't fucking touch me' to a touchy feely person. What happened to me lmao",
-				"Don't ask to hang with me if you are already chillin with 5 different chicks to start with. No thanks.",
-				"Yeah I'm awake right now and yes I hate life",
-				"good talk lmao",
-				"Haha I feel like shit",
-				"Okay so ashton can't cook. Still perfect."
-		};
 		int[] scores = new int[textss.size()];
 		
 		
 		
-		calculateScores(scores, textss);		
+		calculateScores(scores, textss, statuses);		
 		printResults(scores, textss);
+		System.out.println(URL);
+		System.out.println(dailyScore);
 		
 	}
 	
-	public void calculateScores(int[] scores, LinkedList<String> texts) {
+	public void calculateScores(int[] scores, LinkedList<String> texts, List<Status> statuses) {
 		for(int i = 0; i < texts.size(); i++) {
 			Annotation annotation = pipeline.process(texts.get(i));
 			List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
@@ -71,8 +71,17 @@ public class Main {
 				 */
 				if(sentiment.equals("Positive")) {
 					scores[i]++;
+					System.out.println();
+					if (dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) != null)
+						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10), dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) + 1);
+					else
+						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10),  1);
 				} else if(sentiment.equals("Negative")) {
 					scores[i]--;
+					if (dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) != null)
+						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10), dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) - 1);
+					else
+						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10),  -1);
 				}				
 			}			
 		}
