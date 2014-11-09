@@ -54,12 +54,15 @@
 
   	<div id="container">
       <div id="chart_div"></div>
+
+      <form action="index.html">
+    <input type="submit" class="btn btn-primary center" value="New Search">
+</form> 
   		
   	</div>
 
   	<div id="foot">
-      
-  	</div>
+ 	</div>
 
 
     
