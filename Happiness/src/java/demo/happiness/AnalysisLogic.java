@@ -45,10 +45,14 @@ public class AnalysisLogic extends HttpServlet {
             throws ServletException, IOException, TwitterException {
         Twitter t = (new TwitterFactory()).getInstance();
         SentimentAnalyzer sa = new SentimentAnalyzer();
+        sa.setUserName("BarackObama");
         sa.start();
         HashMap<String, Integer> dailyScore = sa.getDailyScore();
-        int score = dailyScore.get("Tue Nov 04");
-        RequestDispatcher rd = request.getRequestDispatcher("./display.jsp?name="+score);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("dailyScore", dailyScore);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("./display.jsp");
         rd.forward(request, response);        
     }
 
