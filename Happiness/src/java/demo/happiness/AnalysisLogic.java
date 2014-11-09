@@ -8,6 +8,9 @@ package demo.happiness;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
 /**
  *
  * @author Ben
@@ -33,9 +42,14 @@ public class AnalysisLogic extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("./display.jsp");
-        rd.forward(request, response);
+            throws ServletException, IOException, TwitterException {
+        Twitter t = (new TwitterFactory()).getInstance();
+        SentimentAnalyzer sa = new SentimentAnalyzer();
+        sa.start();
+        HashMap<String, Integer> dailyScore = sa.getDailyScore();
+        int score = dailyScore.get("Tue Nov 04");
+        RequestDispatcher rd = request.getRequestDispatcher("./display.jsp?name="+score);
+        rd.forward(request, response);        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,7 +64,11 @@ public class AnalysisLogic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (TwitterException ex) {
+            Logger.getLogger(AnalysisLogic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -64,7 +82,11 @@ public class AnalysisLogic extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (TwitterException ex) {
+            Logger.getLogger(AnalysisLogic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
