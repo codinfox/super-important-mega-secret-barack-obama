@@ -7,8 +7,8 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${file.reference.Happiness-lib}</file>
-                    <path-in-war>WEB-INF/classes</path-in-war>
+                    <file>${file.reference.ejml-0.23-src.zip}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.ejml-0.23.jar}</file>
@@ -37,6 +37,10 @@
                 <library dirs="200">
                     <file>${file.reference.jollyday.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.lib-patterns}</file>
+                    <path-in-war>WEB-INF/classes</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.stanford-corenlp-3.5.0-javadoc.jar}</file>

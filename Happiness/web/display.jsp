@@ -1,4 +1,10 @@
+<%@page import="java.io.PrintWriter"%>
+<%@page import="java.util.Iterator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<% HashMap<String, Integer> dailyScore = (HashMap<String, Integer>)session.getAttribute("dailyScore"); %>
+
 <!DOCTYPE html>
 
 <html>
@@ -24,24 +30,26 @@
       function drawChart() {
 
         // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
+        var data = google.visualization.arrayToDataTable([
+          ['Date', '<%=request.getParameter("user") %>'],
+          <%
+            Iterator<String> iter = dailyScore.keySet().iterator();
+            while (iter.hasNext()){
+                String label = iter.next();
+               out.print("['"+label+"',"+dailyScore.get(label)+"],");
+            }
+          %>
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
+        var options = {
+          title: 'Happiness Index',
+          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
@@ -54,7 +62,7 @@
   	</div>
 
   	<div id="container">
-      <div id="chart_div"></div>
+      <div id="chart_div" style="width: 900px; height: 500px"></div>
 
       <form action="./index.jsp">
     <input type="submit" class="btn btn-primary center" value="New Search">
