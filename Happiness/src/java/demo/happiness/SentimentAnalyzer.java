@@ -35,22 +35,22 @@ public class SentimentAnalyzer {
 		pipeline = new StanfordCoreNLP(props);
 		ConfigurationBuilder cb = new ConfigurationBuilder();
                 cb.setDebugEnabled(true)
-                  .setOAuthConsumerKey("vb8ds6NWWXqCUjFLhEMuOp0ms")
-                  .setOAuthConsumerSecret("5UHP2K3R755CSz5xHjqECf7cmudyowjLavZt4dQyeT1mo8L14h")
-                  .setOAuthAccessToken("2865116860-vOnLb2gFtDghuWU327ywdcLiqO1g22rMIBv71mX")
-                  .setOAuthAccessTokenSecret("iF3vEef08UjThjRIKjXXtAT7j8Pn5l38a2AjgKAN3NliG");
+                  .setOAuthConsumerKey("TFsnFxwZWubHPY7AmTop5WBOE")
+                  .setOAuthConsumerSecret("HCh8KpN2YOyzUc5DHFTYMclBGCn5nAW8c2HTiNkEHBnroyGoPL")
+                  .setOAuthAccessToken("2865116860-oYA5rVmJQGyFMfkGiTYbXI4UGdiKa1O7pIdi6SE")
+                  .setOAuthAccessTokenSecret("7CZl8mBfVrchvfhY2xSRyp1okwW0R7UtE16I9gaEiOZd7");
                 TwitterFactory tf = new TwitterFactory(cb.build());
                 Twitter t = tf.getInstance();
                 //t = (new TwitterFactory()).getInstance();
 		
 		LinkedList<String> textss = new LinkedList<String>();
                 Paging paging;
-                //for(int i = 1; i < 2000; i = i+200) {
-                    
-                    paging = new Paging(1, 200);
+                paging = new Paging(1, 250);
+                for(int i = 1; i < 5; i++) {
                     List<Status> newList = t.getUserTimeline(userName, paging);
                     statuses.addAll(newList);
-                //}
+                    paging.setPage(i+1);
+                }
 		//String a = JOptionPane.showInputDialog("Input twitter name");
 		
 		
