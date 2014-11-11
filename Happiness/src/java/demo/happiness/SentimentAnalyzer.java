@@ -62,6 +62,7 @@ public class SentimentAnalyzer {
 		
 		
 		for(Status s : statuses) {
+                    System.out.println(s.getCreatedAt());
 			textss.add(s.getText());
 		}
 
@@ -89,11 +90,19 @@ public class SentimentAnalyzer {
 				 * one sentence. So I calculate the scores of each sentence and the sum of 
 				 * the sentence scores equals the tweet score.
 				 */
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+                                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy");
                                 Date created = null;
+                            
                             try {
-                                created = sdf.parse(statuses.get(i).getCreatedAt().toString().substring(4, 10));
-                            } catch (ParseException ex) { System.out.println("FAILED TO PARSE DATE");}
+                                created = sdf.parse(statuses.get(i).getCreatedAt().toString().substring(4, 10) + " " +
+                                        statuses.get(i).getCreatedAt().toString().substring(24));
+                            } catch (ParseException ex) {
+                                Logger.getLogger(SentimentAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+                                System.out.println("FAILED TO PARSE DATE: " + 
+                                        statuses.get(i).getCreatedAt().toString().substring(4, 10) + " " +
+                                        statuses.get(i).getCreatedAt().toString().substring(24));
+                            }
+                            
                                 
                                 
 				if(sentiment.equals("Positive")) {
