@@ -1,9 +1,11 @@
+<%@page import="java.util.Date"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.util.Iterator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.HashMap"%>
+
+<%@page import="java.util.TreeMap"%>
 <%@page import="java.util.ArrayList"%>
-<% HashMap<String, Integer> dailyScore = (HashMap<String, Integer>)session.getAttribute("dailyScore"); %>
+<% TreeMap<Date, Integer> dailyScore = (TreeMap<Date, Integer>)session.getAttribute("dailyScore"); %>
 
 <!DOCTYPE html>
 
@@ -33,9 +35,9 @@
         var data = google.visualization.arrayToDataTable([
           ['Date', '<%=request.getParameter("user") %>'],
           <%
-            Iterator<String> iter = dailyScore.keySet().iterator();
+            Iterator<Date> iter = dailyScore.keySet().iterator();
             while (iter.hasNext()){
-                String label = iter.next();
+               Date label = iter.next();
                out.print("['"+label+"',"+dailyScore.get(label)+"],");
             }
           %>
@@ -59,6 +61,7 @@
 
   	<div id="Top">
   		<h1 align="center"> Twitter Feelings <h1>
+                        <h2><%=dailyScore.size()%></h2>
   	</div>
 
   	<div id="container">
