@@ -62,7 +62,6 @@ public class SentimentAnalyzer {
 		
 		
 		for(Status s : statuses) {
-                    System.out.println(s.getCreatedAt());
 			textss.add(s.getText());
 		}
 
