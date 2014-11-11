@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.util.Iterator"%>
@@ -36,9 +37,12 @@
           ['Date', '<%=request.getParameter("user") %>'],
           <%
             Iterator<Date> iter = dailyScore.keySet().iterator();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+        
             while (iter.hasNext()){
                Date label = iter.next();
-               out.print("['"+label+"',"+dailyScore.get(label)+"],");
+               String textLabel = sdf.format(label);
+               out.print("['"+textLabel+"',"+dailyScore.get(label)+"],");
             }
           %>
         ]);

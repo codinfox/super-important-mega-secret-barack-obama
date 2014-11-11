@@ -89,7 +89,7 @@ public class SentimentAnalyzer {
 				 * one sentence. So I calculate the scores of each sentence and the sum of 
 				 * the sentence scores equals the tweet score.
 				 */
-                                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
                                 Date created = null;
                             try {
                                 created = sdf.parse(statuses.get(i).getCreatedAt().toString().substring(4, 10));
