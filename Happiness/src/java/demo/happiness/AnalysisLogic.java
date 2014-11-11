@@ -48,7 +48,7 @@ public class AnalysisLogic extends HttpServlet {
         String username = request.getParameter("user");
         Twitter t = (new TwitterFactory()).getInstance();
         SentimentAnalyzer sa = new SentimentAnalyzer();
-        sa.setUserName("BarackObama"); // username 
+        sa.setUserName(username); // username 
         sa.start();
         Map<Date, Integer> dailyScore = sa.getDailyScore();
         
