@@ -50,12 +50,13 @@
         // Set chart options
         var options = {
           title: 'Happiness Index',
-          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
+          curveType: 'function',
+          legend: { position: 'bottom' }
         };
 
+
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
