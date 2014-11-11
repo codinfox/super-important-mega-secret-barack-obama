@@ -1,5 +1,4 @@
 package demo.happiness;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -17,6 +16,14 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class SentimentAnalyzer {
@@ -26,7 +33,7 @@ public class SentimentAnalyzer {
 	private Twitter t;
 	private int positiveTweets, neutralTweets, negativeTweets;
 	private List<Status> statuses = new LinkedList<Status>();
-	private HashMap<String, Integer> dailyScore = new HashMap<String, Integer>();
+	private Map<Date, Integer> dailyScore = new TreeMap<Date, Integer>();
         private String userName = "";
 
 	public void start() throws TwitterException {
@@ -82,19 +89,27 @@ public class SentimentAnalyzer {
 				 * one sentence. So I calculate the scores of each sentence and the sum of 
 				 * the sentence scores equals the tweet score.
 				 */
+                                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
+                                Date created = null;
+                            try {
+                                created = sdf.parse(statuses.get(i).getCreatedAt().toString().substring(4, 10));
+                            } catch (ParseException ex) { System.out.println("FAILED TO PARSE DATE");}
+                                
+                                
 				if(sentiment.equals("Positive")) {
 					scores[i]++;
 					System.out.println();
-					if (dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) != null)
-						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10), dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) + 1);
+                                        
+					if (dailyScore.get(created) != null)
+						dailyScore.put(created, dailyScore.get(created) + 1);
 					else
-						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10),  1);
+						dailyScore.put(created,  1);
 				} else if(sentiment.equals("Negative")) {
 					scores[i]--;
-					if (dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) != null)
-						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10), dailyScore.get(statuses.get(i).getCreatedAt().toString().substring(0, 10)) - 1);
+					if (dailyScore.get(created) != null)
+						dailyScore.put(created, dailyScore.get(created) - 1);
 					else
-						dailyScore.put(statuses.get(i).getCreatedAt().toString().substring(0, 10),  -1);
+						dailyScore.put(created,  -1);
 				}				
 			}			
 		}
@@ -120,7 +135,7 @@ public class SentimentAnalyzer {
 		System.out.println("Neutral tweets: " + neutralTweets);
 	}
         
-        public HashMap<String, Integer> getDailyScore() {
+        public Map<Date, Integer> getDailyScore() {
             return dailyScore;
         }
         public void setUserName(String userName) {
