@@ -2,6 +2,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+<script type="text/javascript">
+window.onload = function(){
+    var buttonGo = document.getElementsByTagName('button')[0];
+    var box = document.getElementById('load');
+    buttonGo.onclick = function(){
+        box.removeAttribute("class")
+    }
+}
+</script>
+
+
     <title>Twitter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<link rel="stylesheet" type="text/css" href="./css/bootstrap-min.css" />
@@ -35,7 +47,27 @@
 		</form>
   	</div>
 
-  	<div id="foot">
+  	<div id="load" class="hidden">
+      <div class="spinner">
+  <div class="spinner-container container1">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div class="circle4"></div>
+  </div>
+  <div class="spinner-container container2">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div class="circle4"></div>
+  </div>
+  <div class="spinner-container container3">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div class="circle4"></div>
+  </div>
+</div>
   		
   	</div>
 
