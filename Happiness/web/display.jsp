@@ -37,7 +37,7 @@
           ['Date', '<%=request.getParameter("user") %>'],
           <%
             Iterator<Date> iter = dailyScore.keySet().iterator();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy");
         
             while (iter.hasNext()){
                Date label = iter.next();
