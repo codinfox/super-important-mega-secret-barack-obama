@@ -179,7 +179,7 @@ margin-top: -50px;
 -moz-transform: translate(-50%, -50%);
 -ms-transform: translate(-50%, -50%);
 -webkit-transform: translate(-50%, -50%);
-  background:rgba(0,0,0, 0.5);
+  background:rgba(0,0,0, 0.2);
   -moz-border-radius: 15px;
 border-radius: 15px;
 
@@ -187,5 +187,5 @@ padding: 10px;
 }
 
 .dark-type{
-  background:rgba(0,0,0, 0.5);
+  background:rgba(0,0,0, 0.1);
 }

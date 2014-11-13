@@ -14,8 +14,8 @@ window.onload = function(){
         box.removeAttribute("class");
         back.setAttribute("class", "dark");
         inputbox.setAttribute("class", "dark-in");
-        inputtext.setAttribute("class", "dark-in");
-        btn.setAttribute("class", "dark-in");
+        inputtext.setAttribute("class", "form-control dark-type");
+        btn.setAttribute("class", "btn btn-primary dark-type");
     }
 }
 </script>
