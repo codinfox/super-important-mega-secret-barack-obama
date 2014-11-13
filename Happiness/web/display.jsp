@@ -66,7 +66,6 @@
 
   	<div id="Top">
   		<h1 align="center"> Twitter Feelings <h1>
-                        <h2><%=dailyScore.size()%></h2>
   	</div>
 
   	<div id="container">
