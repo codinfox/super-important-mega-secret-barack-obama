@@ -8,7 +8,9 @@ package demo.happiness;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -43,11 +45,12 @@ public class AnalysisLogic extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TwitterException {
+        String username = request.getParameter("user");
         Twitter t = (new TwitterFactory()).getInstance();
         SentimentAnalyzer sa = new SentimentAnalyzer();
-        sa.setUserName("BarackObama");
+        sa.setUserName(username); // username 
         sa.start();
-        HashMap<String, Integer> dailyScore = sa.getDailyScore();
+        Map<Date, Integer> dailyScore = sa.getDailyScore();
         
         HttpSession session = request.getSession();
         session.setAttribute("dailyScore", dailyScore);

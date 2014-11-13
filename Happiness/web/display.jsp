@@ -1,9 +1,12 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.util.Iterator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.HashMap"%>
+
+<%@page import="java.util.TreeMap"%>
 <%@page import="java.util.ArrayList"%>
-<% HashMap<String, Integer> dailyScore = (HashMap<String, Integer>)session.getAttribute("dailyScore"); %>
+<% TreeMap<Date, Integer> dailyScore = (TreeMap<Date, Integer>)session.getAttribute("dailyScore"); %>
 
 <!DOCTYPE html>
 
@@ -33,10 +36,13 @@
         var data = google.visualization.arrayToDataTable([
           ['Date', '<%=request.getParameter("user") %>'],
           <%
-            Iterator<String> iter = dailyScore.keySet().iterator();
+            Iterator<Date> iter = dailyScore.keySet().iterator();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy");
+        
             while (iter.hasNext()){
-                String label = iter.next();
-               out.print("['"+label+"',"+dailyScore.get(label)+"],");
+               Date label = iter.next();
+               String textLabel = sdf.format(label);
+               out.print("['"+textLabel+"',"+dailyScore.get(label)+"],");
             }
           %>
         ]);
@@ -44,12 +50,13 @@
         // Set chart options
         var options = {
           title: 'Happiness Index',
-          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
+          curveType: 'function',
+          legend: { position: 'bottom' }
         };
 
+
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
