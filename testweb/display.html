@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link rel="stylesheet" type="text/css" href="./css/bootstrap-min.css" />
+  	<link rel="stylesheet" type="text/css" href="./css/super.css" />
+    <link href='http://fonts.googleapis.com/css?family=Economica|Amatic+SC' rel='stylesheet' type='text/css'>
+
+     <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+      <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          backgroundColor: '-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0)))'
+        };
+
+
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+  </head>
+  <body>
+
+
+      
+    <div class="replay">
+
+      <a href="index.html"><</a>
+    </div>
+    <div class="avatar">
+      <img src="imgs/avatar.jpg"></img>
+    </div>
+          <!-- <div id="container"> -->
+          <div class="chart">
+      <div id="chart_div" class="chart_div" ></div>
+  		</div>
+  	<!-- </div> -->
+
+  	<!-- <div id="foot">
+ 	</div> -->
+
+
+    
+    <script src="http://code.jquery.com/jquery.js"></script>
+  </body>
+</html>
