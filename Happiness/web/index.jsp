@@ -25,6 +25,13 @@ window.onload = function(){
 
   </head>
   <body>
+      
+      <%
+          if (request.getParameter("msg").equals("usernotfound")) {
+              out.print("<script>alert('User Not Found.');</script>");
+          }
+      %>
+      
 
 <div id="back">
 </div>
