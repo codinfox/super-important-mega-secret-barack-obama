@@ -260,10 +260,10 @@ a:hover{
 
 
 width: 900px;
-height:90%;
+height:88%;
 /*background-color: white;*/
   
-position: fixed;
+position: absolute;
   top: 50%;
   left: 60%;
   transform: translate(-50%, -50%);
