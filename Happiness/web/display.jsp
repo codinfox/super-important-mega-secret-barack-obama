@@ -52,6 +52,7 @@
         var options = {
           title: 'Happiness Index',
           curveType: 'function',
+          backgroundColor: "transparent",
           legend: { position: 'bottom' }
         };
 
