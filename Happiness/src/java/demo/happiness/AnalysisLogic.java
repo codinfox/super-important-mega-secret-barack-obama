@@ -44,12 +44,15 @@ public class AnalysisLogic extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TwitterException {
+            throws ServletException, IOException {
         String username = request.getParameter("user");
         Twitter t = (new TwitterFactory()).getInstance();
         SentimentAnalyzer sa = new SentimentAnalyzer();
         sa.setUserName(username); // username 
-        sa.start();
+        try{sa.start();}catch(TwitterException e){
+          RequestDispatcher rd = request.getRequestDispatcher("./index.jsp?msg=usernotfound");
+        rd.forward(request, response);        
+        }
         Map<Date, Integer> dailyScore = sa.getDailyScore();
         String userurl = sa.getImageUrl();
         
@@ -73,11 +76,12 @@ public class AnalysisLogic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+        processRequest(request, response);
+        /*try {
             processRequest(request, response);
         } catch (TwitterException ex) {
             Logger.getLogger(AnalysisLogic.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     /**
@@ -91,11 +95,12 @@ public class AnalysisLogic extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+       processRequest(request, response);
+        /* try {
             processRequest(request, response);
         } catch (TwitterException ex) {
             Logger.getLogger(AnalysisLogic.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     /**
