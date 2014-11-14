@@ -69,7 +69,7 @@
       
     <div class="replay">
 
-      <a href="index.html"><</a>
+      <a href="index.jsp"><</a>
     </div>
     <div class="avatar">
         <img src="<%=(String)session.getAttribute("userUrl") %>"></img>
