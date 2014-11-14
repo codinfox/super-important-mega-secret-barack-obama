@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,24 +5,23 @@
 window.onload = function(){
     var buttonGo = document.getElementsByTagName('button')[0];
     var box = document.getElementById('load');
-    var back = document.getElementById('back');
-    var inputbox = document.getElementById('inputbox');
-    var inputtext = document.getElementById('inputtext');
-    var btn = document.getElementById('btn');
+    var textbtn = document.getElementById('textbtn');
+
     buttonGo.onclick = function(){
         box.removeAttribute("class");
-        back.setAttribute("class", "dark");
-        inputbox.setAttribute("class", "dark-in");
-        inputtext.setAttribute("class", "form-control dark-type");
-        btn.setAttribute("class", "btn btn-primary dark-type");
+        textbtn.setAttribute("class", "hidden");
+
     }
 }
 </script>
 
     <title>Twitter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap-min.css" />
-    <link rel="stylesheet" type="text/css" href="./css/super.css" />
+    
+  	<link rel="stylesheet" type="text/css" href="./css/bootstrap-min.css" />
+  	<link rel="stylesheet" type="text/css" href="./css/super.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+
 
   </head>
   <body>
@@ -31,31 +29,28 @@ window.onload = function(){
 <div id="back">
 </div>
     
-        <div id="Top">
-          <h1 align="center"> Twitter Feelings <h1>
-        </div>
-        <div id="container" >
+      	<div id="Top">
+      		<p id="question" align="center"> How do people feel recently? <p> 
+
+      	</div>
+      	<div id="container" >
           <div id="inputbox">
           </div>
-          <form name="user" action="./AnalysisLogic" method="post" class="form-horizontal">
-            <fieldset>
-              <div class="form-group">
-                <img src=""></img>
-              </div>
-              <div class="form-group">
-                <label for="usernameInput" class="col-lg-2 control-label">Username: </label> 
-                <div id="#username" class="col-lg-10">
-                  <input id="inputtext" type="text" class="form-control" name="user" placeholder="Username">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                  <button type="submit" id="btn" class="btn btn-primary">Submit</button>
-                </div>
-              </div>        
-            </fieldset>
-          </form>
-        </div>
+      		<form name="user" action="./AnalysisLogic" method="post" class="form-horizontal">
+        		<fieldset>
+        			<div class="form-group">
+      	  			<img src=""></img>
+      	  		</div>
+      	  		<div class="form-group">
+      				  <!-- <label for="usernameInput" class="col-lg-2 control-label">Username: </label>  -->
+        				<div id="#username" class="col-lg-10">
+        	       	<input id="inputtext" type="text" class="form-control" name="user" placeholder="                       Who are you interested in">
+        	      </div>
+      	      </div>
+      			  <div class="form-group">
+            		<div class="col-lg-10 col-lg-offset-2">
+              		<button type="submit" id="btn" class="btn btn-primary"><div id="textbtn" >Find out <img src="imgs/twitter-512.png"></img></div>
+
 
     <div id="load" class="hidden">
       <div class="spinner">
@@ -78,9 +73,18 @@ window.onload = function(){
     <div class="circle4"></div>
   </div>
 </div>
-      
-    </div>
 
+
+
+                  </button>
+            		</div>
+          		</div>      	
+          	</fieldset>
+        	</form>
+      	</div>
+
+  		
+  	</div>
 
 
     <script src="http://code.jquery.com/jquery.js"></script>

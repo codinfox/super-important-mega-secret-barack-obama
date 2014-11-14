@@ -109,9 +109,9 @@ public class SentimentAnalyzer {
 					System.out.println();
                                         
 					if (dailyScore.get(created) != null)
-						dailyScore.put(created, dailyScore.get(created) + 1);
+						dailyScore.put(created, dailyScore.get(created) + 2);
 					else
-						dailyScore.put(created,  1);
+						dailyScore.put(created,  2);
 				} else if(sentiment.equals("Negative")) {
 					scores[i]--;
 					if (dailyScore.get(created) != null)

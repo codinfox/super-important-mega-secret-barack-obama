@@ -16,7 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<link rel="stylesheet" type="text/css" href="./css/bootstrap-min.css" />
   	<link rel="stylesheet" type="text/css" href="./css/super.css" />
-    <link href='http://fonts.googleapis.com/css?family=Economica|Amatic+SC' rel='stylesheet' type='text/css'>
 
      <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -61,26 +60,25 @@
         chart.draw(data, options);
       }
     </script>
+
   </head>
   <body>
 
+  	<div id="Top">
+  		<h1 align="center"> Twitter Feelings <h1>
+  	</div>
 
-      
-    <div class="replay">
+  	<div id="container">
+      <div id="chart_div" style="width: 900px; height: 500px"></div>
 
-      <a href="index.html"><</a>
-    </div>
-    <div class="avatar">
-        <img src="<%=(String)session.getAttribute("userUrl") %>"></img>
-    </div>
-          <!-- <div id="container"> -->
-          <div class="chart">
-      <div id="chart_div" class="chart_div" ></div>
-  		</div>
-  	<!-- </div> -->
+      <form action="./index.jsp">
+    <input type="submit" class="btn btn-primary center" value="New Search">
+</form> 
+  		
+  	</div>
 
-  	<!-- <div id="foot">
- 	</div> -->
+  	<div id="foot">
+ 	</div>
 
 
     

@@ -51,9 +51,11 @@ public class AnalysisLogic extends HttpServlet {
         sa.setUserName(username); // username 
         sa.start();
         Map<Date, Integer> dailyScore = sa.getDailyScore();
+        String userurl = sa.getImageUrl();
         
         HttpSession session = request.getSession();
         session.setAttribute("dailyScore", dailyScore);
+        session.setAttribute("userUrl", userurl);
         
         RequestDispatcher rd = request.getRequestDispatcher("./display.jsp");
         rd.forward(request, response);        
