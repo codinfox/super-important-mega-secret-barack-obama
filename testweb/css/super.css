@@ -237,7 +237,7 @@ a:hover{
 .replay{
   position: fixed;
   margin-top: 15%;
-  margin-left: 15%;
+  margin-left: 10%;
   top:0px;
   font-family: 'Economica', sans-serif;
   font-size: 200px;
@@ -245,8 +245,8 @@ a:hover{
 
 .avatar{
   position: fixed;
-  margin-top: 19%;
-  margin-left: 20%;
+  margin-top: 21%;
+  margin-left: 15%;
 }
 
 .avatar img{ 
